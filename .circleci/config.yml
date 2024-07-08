@@ -7,6 +7,12 @@ jobs:
     steps:
       - checkout
       - run: python main.py
+  gh-test:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: python tests.py
   gh-deploy:
     docker:
       - image: cimg/python:3.11
@@ -17,6 +23,9 @@ workflows:
   gh_ci_pipeline:
     jobs:
       - gh-build 
+      - gh-test:
+          requires:
+            - gh-build 
       - gh-deploy:
           requires:
             - gh-build
