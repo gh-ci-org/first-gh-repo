@@ -28,7 +28,7 @@ workflows:
             - gh-build 
       - gh-deploy:
           requires:
-            - gh-build
+            - gh-test
           filters:
             branches:
               only: main
