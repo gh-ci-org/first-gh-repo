@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  gh-build:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: python main.py
+  gh-deploy:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - run: echo "Deploying to production server"
+
+workflows:
+  gh_ci_pipeline:
+    jobs:
+      - gh-build 
+      - gh-deploy:
+          requires:
+            - gh-build
+          filters:
+            branches:
+              only: main
